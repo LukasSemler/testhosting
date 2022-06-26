@@ -1,0 +1,118 @@
+GET http://localhost:2410/products
+
+#############
+
+GET http://localhost:2410/products/1
+
+############
+
+
+POST http://localhost:2410/contact
+Content-Type: application/json
+
+{
+  "vorname": "Lukas",
+  "nachname": "Semler",
+  "emailAddr": "lukas.semler@gmail.com", 
+  "betreff": "Das ist ein betreff", 
+  "nachricht": "Das ist eine Nachricht", 
+  "date": "2022-04-30"
+
+}
+#####
+
+
+POST http://localhost:2410/register
+Content-Type: application/json
+
+{
+  "vorname": "Lukas",
+  "nachname": "Semler",
+  "email": "lukas.semler@gmail.com",
+  "strasse_hnr": "Venusweg 11",
+  "stadt": "Wien",
+  "plz": "1140",
+  "password": "LukasPW"
+}
+
+#########
+POST http://localhost:2410/checkout
+Content-Type: application/json
+
+{
+  "contact_info": {
+    "email": "semler.l04@htlwienwest.at",
+    "vorname": "Lukas",
+    "nachname": "Semler",
+    "company":"" ,
+    "address": "",
+    "stadt":"" ,
+    "land": "Deutschland",
+    "plz": "",
+    "phone": "",
+    "card_number": "",
+    "name_on_card": "",
+    "expiration_date": "",
+    "cvc": ""
+  },
+  "aktiverUser": {
+    "knd_id": 1,
+    "vorname": "Lukas",
+    "nachname": "Semler",
+    "strasse_hnr": "Venusweg 11",
+    "plz": 1140,
+    "ort": "Wien",
+    "email": "semler.l04@htlwienwest.at",
+    "password": "LukasPW"
+  },
+  "total": 61033.99,
+  "produkte": [
+    {
+      "p_id": 1,
+      "titel": "iPhone 13 Pro Max",
+      "beschreibung": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+      "preis": "1200.99",
+      "link_thumbnail": "/images/iphone13promax.png",
+      "link_photo": "http://localhost:2410/images/image2.jpg"
+    },
+    {
+      "p_id": 16,
+      "titel": "MacPro",
+      "beschreibung": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+      "preis": "59828.00",
+      "link_thumbnail": "/images/MacPro.jpg",
+      "link_photo": "http://localhost:2410/images/image18.jpg"
+    }
+  ]
+}
+
+
+#######
+
+POST http://localhost:2410/product
+Content-Type: application/json
+
+{
+  "titel": "iPhone 13 Pro Max",
+  "beschreibung": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+  "preis": 1200.99,
+  "kategorie": { "k_id": 3, "titel": "Samsung" },
+  "link_thumbnail": "/images/iphone13promax.png"
+}
+
+############
+GET http://localhost:2410/productBewertung/6?knd_id=1
+
+#########
+
+
+POST http://localhost:2410/productBewertung/1
+Content-Type: application/json
+
+{
+  "titel": "Test",
+  "beschreibung": "Das ist ein Test",
+  "rating": "5",
+  "knd_id": "1",
+  "p_id": "1"
+}
