@@ -8,16 +8,16 @@ import {
   deleteUserDB,
 } from '../Models/models.js';
 import validator from 'is-my-json-valid';
-// import { SendAuthCodePerMail, SendNewPasswordPerMail } from '../Mail/mail.js';
 import postmark from 'postmark';
-import dotenv from 'dotenv';
-
 import fs from 'fs';
 import path from 'path';
+import dotenv from 'dotenv';
+//!!!KANN MAN LÖSCHEN import { SendAuthCodePerMail, SendNewPasswordPerMail } from '../Mail/mail.js';
 
 dotenv.config();
 
 const dirname = path.resolve();
+
 const emailClient = new postmark.ServerClient(process.env.postmarkToken);
 
 const validateUser = validator({
@@ -91,10 +91,8 @@ const sendCodeUser = async (req, res) => {
 
   // Code generieren
   const code = makeAuthCode(6);
-  console.log(code);
 
   //Code an den User schicken
-  //TODO postmark einbinden
   // emailClient.sendEmailWithTemplate({
   //   From: 'semler.l04@htlwienwest.at',
   //   To: email,
@@ -108,8 +106,6 @@ const sendCodeUser = async (req, res) => {
   //     company_address: 'Thaliastraße 125',
   //   },
   // });
-
-  res.status(200).send(code);
 };
 
 //Thumbnail setzen und speichern
@@ -153,8 +149,7 @@ const login = async (req, res) => {
   if (result) {
     if (result.isadmin) {
       const code = makeAuthCode(6);
-      // SendAuthCodePerMail(code, email, `${result.vorname} ${result.nachname}`, code, res, result);
-      //TODO postmark einbinden
+      // TODO postmark einbinden
       // emailClient.sendEmailWithTemplate({
       //   From: 'semler.l04@htlwienwest.at',
       //   To: email,
@@ -224,7 +219,6 @@ const patchUser = async (req, res) => {
   const { id } = req.params;
 
   const result = await patchUserDB(id, req.body);
-  console.log(result);
 
   if (result) return res.status(200).json(result);
 

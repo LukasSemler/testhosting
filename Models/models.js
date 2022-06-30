@@ -55,8 +55,6 @@ const loginUser = async (email, password) => {
   console.log('password: ' + password);
   const { rows } = await query('SELECT * FROM kunde WHERE email = $1', [email]);
 
-  console.log('rows: ' + rows);
-
   if (rows[0].passwort == password) return rows[0];
 
   return false;

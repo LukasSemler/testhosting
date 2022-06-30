@@ -12,7 +12,7 @@ function wsServer(httpServer) {
     let email = ws._protocol;
     email = email.replace('|', '@');
     connections.push({ ws, email });
-    
+
     //Alle Aktiven User an alle User senden
     connections.forEach((elem) => {
       elem.ws.send(JSON.stringify({ type: 'newConnection', data: email }));
@@ -21,19 +21,26 @@ function wsServer(httpServer) {
     //Wenn der WebsocketServer Nachrichten bekommt
     ws.on('message', (data) => {
       const { daten: positionData, type, from, to } = JSON.parse(data);
+      const abc = JSON.parse(data);
       //------ALARM------
       if (type == 'alarm') {
         console.log('ALARM----------------------------------------------------------------');
         connections.forEach((elem) =>
           elem.ws.send(JSON.stringify({ type: 'alarm', data: positionData })),
         );
-      } 
-      //
+      } else if (type == 'stopAlarmAsMitarbeiter') {
+        //An WebSocketUser senden dass Alarm beendet wird, SW kümmert sich weiteres drum
+        connections.forEach((elem) =>
+          elem.ws.send(JSON.stringify({ type: 'stopAlarmAsClient', data: positionData })),
+        ); //PositonData ist in dem Fall die Email, bei wessen Client der Alarm aufhören soll
+      }
+
+      //-------POSITION-TRACKING-------
       else if (type == 'sendPosition') {
         connections.forEach((elem) =>
           elem.ws.send(JSON.stringify({ type: 'getPosition', data: positionData })),
         );
-      } 
+      }
       //-----MESSAGE------
       else if (type == 'MessageUser') {
         console.log(type);
@@ -42,8 +49,7 @@ function wsServer(httpServer) {
         connections.forEach((elem) =>
           elem.ws.send(JSON.stringify({ type: 'MessageUser', data: positionData, from: from })),
         );
-      } 
-      else if (type == 'MessageMitarbeiter') {
+      } else if (type == 'MessageMitarbeiter') {
         connections.forEach((elem) => {
           console.log('to: ' + to);
           console.log('EMAIL', elem.email);
